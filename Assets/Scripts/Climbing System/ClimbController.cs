@@ -97,6 +97,12 @@ public class ClimbController : MonoBehaviour
 
     private Vector3 GetHandPosition(Transform ledge)
     {
-        return ledge.position + ledge.forward * 0.1f + Vector3.up * 0.07f + -ledge.right * 0.3f;
+        var position = ledge.position 
+                       + ledge.forward * 0.11f 
+                       + Vector3.up * 0.001f 
+                       //+ -ledge.right * 0.00001f;
+                       + -ledge.right * -0.3f;
+
+        return position;
     }
 }
