@@ -185,19 +185,11 @@ public class ClimbController : MonoBehaviour
     private Vector3 GetHandPosition(Transform ledge, AvatarTarget hand, Vector3? handOffset)
     {
         
-        Debug.Log("handOffset: " + handOffset);
-        
-        Debug.Log("hand: " + hand);
-        
         // Obtener el valor del offset o usar el valor por defecto
         var offsetValue = (handOffset != null) ? handOffset.Value : new Vector3(0.3f, 0.001f, 0.11f);
         
-        Debug.Log("offsetValue: " + offsetValue);
-        
         // Determinar la dirección horizontal en función de la mano
         var horizontalDir = (hand == AvatarTarget.RightHand) ? ledge.right : -ledge.right;
-        
-        Debug.Log("horizontalDir: " + horizontalDir);
         
         /*var position = ledge.position 
                        + ledge.forward * 0.11f 
@@ -211,19 +203,6 @@ public class ClimbController : MonoBehaviour
                        + ledge.forward * offsetValue.z 
                        + Vector3.up * offsetValue.y 
                        - horizontalDir * offsetValue.x;
-
-        
-        
-        // Calcular el centro del obstáculo
-        var obstacleCenter = ledge.position;
-
-        // Asegurar que el offset se aplica hacia el centro del obstáculo
-        /*var position = obstacleCenter
-                       + ledge.forward * offsetValue.z
-                       + Vector3.up * offsetValue.y
-                       - horizontalDir * offsetValue.x;*/
-        
-        Debug.Log("position: " + position);
 
         return position;
     }
@@ -249,35 +228,4 @@ public class ClimbController : MonoBehaviour
 
         return nearestPoint;
     }
-    
-    /*private void UpdateOffsetsForAnimation(string anim)
-    {
-        if ( anim == "ShimmyRight" || anim == "ShimmyLeft" )
-        {
-            isPlayerInShimmy = true;
-            
-            // Cambiar valores de handOffsetUp, handOffsetDown, handOffsetLeft y handOffsetRight a negativo
-            handOffsetUp = new Vector3(Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetDown = new Vector3(Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetLeft = new Vector3(Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetRight = new Vector3(Mathf.Abs(handOffsetRight.x), handOffsetRight.y, handOffsetRight.z);
-        }
-        else if ((anim == "HangHopUp" || anim == "HangHopDown" || anim == "HangHopRight" || anim == "HangHopLeft") && !isPlayerInShimmy )
-        {
-            isPlayerInShimmy = false;
-            
-            // Cambiar valores de handOffsetUp, handOffsetDown, handOffsetLeft y handOffsetRight a positivo
-            handOffsetUp = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetDown = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetLeft = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetRight = new Vector3(-Mathf.Abs(handOffsetRight.x), handOffsetRight.y, handOffsetRight.z);
-        }
-        else
-        {
-            handOffsetUp = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetDown = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetLeft = new Vector3(-Mathf.Abs(handOffsetLeft.x), handOffsetLeft.y, handOffsetLeft.z);
-            handOffsetRight = new Vector3(-Mathf.Abs(handOffsetRight.x), handOffsetRight.y, handOffsetRight.z);
-        }
-    }*/
 }
