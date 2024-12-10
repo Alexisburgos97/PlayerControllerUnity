@@ -156,14 +156,24 @@ public class PlayerController : MonoBehaviour
             targetRotation = transform.rotation;
         }
     }
+
+    public void EnableCharacterController(bool enabled)
+    {
+        characterController.enabled = enabled;
+    }
+
+    public void ResetTargetRotation()
+    {
+        targetRotation = transform.rotation;
+    }
     
-    public IEnumerator DoAction(string animName, MatchTargetParans matchTargetParans, Quaternion targetRotation, bool rotate = false, float postDelay = 0f, bool mirror = false)
+    public IEnumerator DoAction(string animName, MatchTargetParans matchTargetParans = null, Quaternion targetRotation = new Quaternion(), bool rotate = false, float postDelay = 0f, bool mirror = false)
     {
         InAction = true;
 
         animator.SetBool("mirrorAction", mirror);
         
-        animator.CrossFade(animName, 0.2f);
+        animator.CrossFadeInFixedTime(animName, 0.2f);
 
         yield return null;
 
@@ -176,14 +186,18 @@ public class PlayerController : MonoBehaviour
         
         // yield return new WaitForSeconds(animState.length);
 
+        float rotateStartTime = (matchTargetParans != null) ? matchTargetParans.startTime : 0f;
+        
         float timer = 0f;
         while (timer < animState.length)
         {
             timer += Time.deltaTime;
+            
+            float nomalizedTime = timer / animState.length;
 
-            if (rotate)
+            if (rotate && nomalizedTime > rotateStartTime)
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, this.targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
 
             if (matchTargetParans != null)

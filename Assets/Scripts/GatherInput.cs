@@ -11,6 +11,7 @@ public class GatherInput : MonoBehaviour
     private InputAction lookAction;
     private InputAction moveAction;
     private InputAction jumpAction;
+    private InputAction dropAction;
     
     [SerializeField] private float smoothTime = 4f;
 
@@ -22,6 +23,7 @@ public class GatherInput : MonoBehaviour
     public bool usingGamePad;
     
     public bool tryToJump;
+    public bool tryToDrop;
     
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class GatherInput : MonoBehaviour
         lookAction = playerInput.actions["Look"];
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
+        dropAction = playerInput.actions["Drop"];
     }
 
     private void Update()
@@ -47,7 +50,9 @@ public class GatherInput : MonoBehaviour
         lookAction.canceled += OnLookCanceled;
         jumpAction.performed += Jump;
         jumpAction.canceled += OnJumpCanceled;
-
+        dropAction.performed += Drop;
+        dropAction.canceled += OnDropCanceled;
+        
         // moveAction.performed += ReadDirection;
         // moveAction.canceled += ReadDirection;
     }
@@ -77,6 +82,16 @@ public class GatherInput : MonoBehaviour
     {
         tryToJump = false;
     }
+    
+    private void Drop(InputAction.CallbackContext context)
+    {
+        tryToDrop = true;
+    }
+
+    private void OnDropCanceled(InputAction.CallbackContext context)
+    {
+        tryToDrop = false;
+    }
 
     private void OnDisable()
     {
@@ -84,6 +99,8 @@ public class GatherInput : MonoBehaviour
         lookAction.canceled -= OnLookCanceled;
         jumpAction.performed -= Jump;
         jumpAction.canceled -= OnJumpCanceled;
+        dropAction.performed -= Drop;
+        dropAction.canceled -= OnDropCanceled;
         
         // moveAction.performed -= ReadDirection;
         // moveAction.canceled -= ReadDirection;
